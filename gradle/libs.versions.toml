@@ -5,7 +5,7 @@ javafx = "22.0.1"
 
 # plugins
 kotlin = "2.0.0"
-changelog = "2.2.0"
+changelog = "2.2.1"
 gradleIntelliJPlugin = "1.17.2"
 qodana = "2023.3.1"
 kover = "0.7.6"
