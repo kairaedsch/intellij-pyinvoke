@@ -16,5 +16,5 @@
                               implementationClass="com.github.kairaedsch.intellijpyinvoke.ui.PIRunLineMarkerContributor"/>
     <notificationGroup id="com.github.kairaedsch.intellijpyinvoke.notifications" displayType="TOOL_WINDOW"
                        key="notifications" toolWindowId="PyInvokeToolWindow"/>
-  </extensions>z
+  </extensions>
 </idea-plugin>
