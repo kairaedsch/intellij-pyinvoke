@@ -30,7 +30,7 @@ class PIToolWindow(private val toolWindow: ToolWindow) {
                 ?.filter { it.module == module }
                 ?.forEach { folder ->
                     val folderNode = if (folder.pathFromModule == "") moduleNode else {
-                        val projectNode = DefaultMutableTreeNode(folder.path)
+                        val projectNode = DefaultMutableTreeNode(folder.pathFromModule)
                         moduleNode.add(projectNode)
                         projectNode
                     }
@@ -74,4 +74,3 @@ class PIToolWindow(private val toolWindow: ToolWindow) {
         tree.componentPopupMenu = popupMenu.component
     }
 }
-

@@ -12,7 +12,9 @@ class PIFolder(
     val path: String,
 ) {
     val tasks = scanPyInvokeFolder()
-    val pathFromModule get() = path.removePrefix(module.basePath ?: "")
+    val pathFromModule get() = path
+        .removePrefix(module.basePath ?: "")
+        .removePrefix("/")
 
     private fun scanPyInvokeFolder(): List<PITask> {
         val list = runPyInvoke(module, path, "--list") ?: return emptyList()

@@ -11,7 +11,7 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <toolWindow factoryClass="com.github.kairaedsch.intellijpyinvoke.ui.toolwindow.PIToolWindowFactory"
-                id="PyInvokeToolWindow" order="first" anchor="right" icon="PythonIcons.Python.PythonConsole"/>
+                id="PyInvokeToolWindow" order="first" anchor="right" icon="com.github.kairaedsch.intellijpyinvoke.ui.Icons.Logo"/>
     <runLineMarkerContributor language="Python"
                               implementationClass="com.github.kairaedsch.intellijpyinvoke.ui.PIRunLineMarkerContributor"/>
     <notificationGroup id="com.github.kairaedsch.intellijpyinvoke.notifications" displayType="TOOL_WINDOW"

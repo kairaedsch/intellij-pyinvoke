@@ -1,4 +1,4 @@
-# intellij-pyinvoke
+<p align="center"><img height="200px" src="src/main/resources/icon/logo.svg"/></p>
 
 ![Build](https://github.com/kairaedsch/intellij-pyinvoke/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/com.github.kairaedsch.intellijpyinvoke.svg)](https://plugins.jetbrains.com/plugin/com.github.kairaedsch.intellijpyinvoke)

@@ -2,13 +2,13 @@ package com.github.kairaedsch.intellijpyinvoke.ui.toolwindow
 
 import com.github.kairaedsch.intellijpyinvoke.PIBundle.message
 import com.github.kairaedsch.intellijpyinvoke.PIService
+import com.github.kairaedsch.intellijpyinvoke.ui.Icons
 import com.intellij.icons.ExpUiIcons
 import com.intellij.openapi.components.service
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.ui.ColoredTreeCellRenderer
 import com.intellij.ui.SimpleTextAttributes.*
-import com.jetbrains.python.icons.PythonIcons
 import javax.swing.JTree
 import javax.swing.tree.DefaultMutableTreeNode
 
@@ -34,7 +34,7 @@ class PITreeCellRenderer : ColoredTreeCellRenderer() {
         append(name, if (level <= 1) REGULAR_BOLD_ATTRIBUTES else REGULAR_ATTRIBUTES)
         if (node.leafCount > 1) append("  " + message("x_tasks", node.leafCount), GRAYED_ATTRIBUTES)
         icon = when {
-            level <= 1 -> PythonIcons.Python.PythonConsole
+            level <= 1 -> Icons.Logo
             !leaf -> ExpUiIcons.RunConfigurations.Compound
             else -> ExpUiIcons.Run.Run
         }
