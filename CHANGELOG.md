@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Logo
+
 ## [0.0.3-alpha] - 2024-07-08
 
 ### Added
