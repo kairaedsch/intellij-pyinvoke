@@ -1,5 +1,6 @@
 package com.github.kairaedsch.intellijpyinvoke.run
 
+import com.github.kairaedsch.intellijpyinvoke.run.PIRunMode.*
 import com.intellij.execution.ExecutionException
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.util.ExecUtil.execAndGetOutput
@@ -12,10 +13,12 @@ import com.jetbrains.python.sdk.PythonSdkType
 import com.jetbrains.python.sdk.PythonSdkUtil
 import java.nio.charset.StandardCharsets.UTF_8
 
-fun runPyInvoke(module: Module, path: String, vararg args: String): String? {
-    return runModulePyInvoke(module, path, args.toList())
-        ?: runProjectPyInvoke(module.project, path, args.toList())
-        ?: runConsolePyInvoke(path, args.toList())
+fun runPyInvoke(runMode: PIRunMode, module: Module, path: String, vararg args: String): String? {
+    return when (runMode) {
+        MODE_TERMINAL_RUN -> runConsolePyInvoke (path, args.toList())
+        MODE_SDK_RUN -> runModulePyInvoke(module, path, args.toList())
+        MODE_SDK_DEBUG -> runModulePyInvoke(module, path, args.toList())
+    }
 }
 
 private fun runConsolePyInvoke(path: String, args: List<String>): String? {

@@ -20,6 +20,4 @@ class PITask(
             "$path/tasks/${parents.joinToString("/")}.py",
             "$path/tasks/${parents.joinToString("/")}/__init__.py",
         )
-
-    override fun toString() = fullName
 }

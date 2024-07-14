@@ -1,5 +1,6 @@
 package com.github.kairaedsch.intellijpyinvoke.scanner
 
+import com.github.kairaedsch.intellijpyinvoke.run.PIRunMode
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.diagnostic.fileLogger
 import com.intellij.openapi.module.Module
@@ -8,12 +9,15 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.search.FilenameIndex
 
-class PIProject(private val project: Project) {
+class PIProject(
+    private val project: Project,
+    val runMode: PIRunMode
+) {
     val pyInvokeFolders = determineFolders()
 
     private fun determineFolders() = ModuleManager.getInstance(project).modules.flatMap { module ->
         determineFolderPaths(module)
-            .map { folder -> PIFolder(module, folder.path) }
+            .map { folder -> PIFolder(module, folder.path, runMode) }
             .filter { it.tasks.isNotEmpty() }
     }
 
