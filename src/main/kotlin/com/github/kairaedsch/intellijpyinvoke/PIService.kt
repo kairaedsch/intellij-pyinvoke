@@ -1,5 +1,7 @@
 package com.github.kairaedsch.intellijpyinvoke
 
+import com.github.kairaedsch.intellijpyinvoke.run.PIRunMode
+import com.github.kairaedsch.intellijpyinvoke.run.PIRunMode.MODE_TERMINAL_RUN
 import com.github.kairaedsch.intellijpyinvoke.scanner.PIProject
 import com.github.kairaedsch.intellijpyinvoke.scanner.PITask
 import com.intellij.platform.ide.progress.withBackgroundProgress
@@ -25,16 +27,20 @@ class PIService(private val project: Project): Disposable, CoroutineScope {
     private val _pyInvokeProject: SimpleObjectProperty<PIProject?> = SimpleObjectProperty(null)
     val pyInvokeProject: ReadOnlyObjectProperty<PIProject?> get() = _pyInvokeProject
 
-    fun refresh() {
+    fun refresh(runMode: PIRunMode? = null) {
+        val realRunMode = runMode ?: this.runMode
         launch {
             withBackgroundProgress(project, PIBundle.message("background_scan", project.name), true) {
-                val piProject = PIProject(project)
+                val piProject = PIProject(project, realRunMode)
                 ApplicationManager.getApplication().invokeLater {
                     _pyInvokeProject.set(piProject)
                 }
             }
         }
     }
+
+    val runMode: PIRunMode
+        get() = pyInvokeProject.get()?.runMode ?: MODE_TERMINAL_RUN
 
     fun getTask(element: PyFunction): PITask? {
         for (folder in pyInvokeProject.get()?.pyInvokeFolders ?: emptyList()) {

@@ -1,5 +1,6 @@
 package com.github.kairaedsch.intellijpyinvoke.scanner
 
+import com.github.kairaedsch.intellijpyinvoke.run.PIRunMode
 import com.github.kairaedsch.intellijpyinvoke.run.runPyInvoke
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleUtilCore
@@ -10,6 +11,7 @@ import kotlin.text.RegexOption.MULTILINE
 class PIFolder(
     val module: Module,
     val path: String,
+    private val runMode: PIRunMode
 ) {
     val tasks = scanPyInvokeFolder()
     val pathFromModule get() = path
@@ -17,7 +19,7 @@ class PIFolder(
         .removePrefix("/")
 
     private fun scanPyInvokeFolder(): List<PITask> {
-        val list = runPyInvoke(module, path, "--list") ?: return emptyList()
+        val list = runPyInvoke(runMode, module, path, "--list") ?: return emptyList()
         val taskPattern = """^\s*(\w+(?:\.\w+)*)\s*${'$'}""".toRegex(MULTILINE)
         val matches = taskPattern.findAll(list)
         return matches.map { task ->
