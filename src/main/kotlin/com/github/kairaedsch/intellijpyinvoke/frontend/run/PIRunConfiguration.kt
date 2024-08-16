@@ -1,18 +1,20 @@
-package com.github.kairaedsch.intellijpyinvoke.run
+package com.github.kairaedsch.intellijpyinvoke.frontend.run
 
 import com.github.kairaedsch.intellijpyinvoke.PIBundle
-import com.github.kairaedsch.intellijpyinvoke.scanner.PITask
+import com.github.kairaedsch.intellijpyinvoke.common.PITask
 import com.intellij.execution.ProgramRunnerUtil
 import com.intellij.execution.RunManager
 import com.intellij.execution.RunnerAndConfigurationSettings
 import com.intellij.execution.executors.DefaultDebugExecutor
 import com.intellij.execution.executors.DefaultRunExecutor
 import com.intellij.execution.impl.RunDialog
+import com.intellij.ide.plugins.PluginManager
+import com.intellij.openapi.extensions.PluginId
 import com.intellij.sh.run.ShConfigurationType
 import com.intellij.sh.run.ShRunConfiguration
-
 import com.jetbrains.python.run.PythonConfigurationType
 import com.jetbrains.python.run.PythonRunConfiguration
+
 
 fun createSdkRunConfiguration(task: PITask): RunnerAndConfigurationSettings {
     val runManager = RunManager.getInstance(task.module.project)
@@ -31,8 +33,12 @@ fun createSdkRunConfiguration(task: PITask): RunnerAndConfigurationSettings {
 }
 
 fun createTerminalRunConfiguration(task: PITask): RunnerAndConfigurationSettings {
+    val plugin = PluginManager.getInstance().findEnabledPlugin(PluginId.getId("com.jetbrains.sh"))
     val runManager = RunManager.getInstance(task.module.project)
-    val configuration: RunnerAndConfigurationSettings = runManager.createConfiguration("Pyinvoke ${task.fullName}", ShConfigurationType.getInstance())
+    val factory = ShConfigurationType.getInstance()
+    val configuration: RunnerAndConfigurationSettings = runManager.createConfiguration("Pyinvoke ${task.fullName}",
+        factory
+    )
     val shRunConfiguration = configuration.configuration as ShRunConfiguration
 
     shRunConfiguration.name = "invoke ${task.fullName}"

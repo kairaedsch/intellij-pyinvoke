@@ -10,10 +10,10 @@
   <resource-bundle>messages.MyBundle</resource-bundle>
 
   <extensions defaultExtensionNs="com.intellij">
-    <toolWindow factoryClass="com.github.kairaedsch.intellijpyinvoke.ui.toolwindow.PIToolWindowFactory"
-                id="PyInvokeToolWindow" order="first" anchor="right" icon="com.github.kairaedsch.intellijpyinvoke.ui.Icons.Logo"/>
+    <toolWindow factoryClass="com.github.kairaedsch.intellijpyinvoke.frontend.ui.toolwindow.PIToolWindowFactory"
+                id="PyInvokeToolWindow" order="first" anchor="right" icon="com.github.kairaedsch.intellijpyinvoke.frontend.ui.Icons.Logo"/>
     <runLineMarkerContributor language="Python"
-                              implementationClass="com.github.kairaedsch.intellijpyinvoke.ui.PIRunLineMarkerContributor"/>
+                              implementationClass="com.github.kairaedsch.intellijpyinvoke.frontend.PIRunLineMarkerContributor"/>
     <notificationGroup id="com.github.kairaedsch.intellijpyinvoke.notifications" displayType="TOOL_WINDOW"
                        key="notifications" toolWindowId="PyInvokeToolWindow"/>
   </extensions>

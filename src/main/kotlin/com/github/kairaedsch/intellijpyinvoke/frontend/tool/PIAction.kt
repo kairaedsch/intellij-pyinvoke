@@ -1,11 +1,13 @@
-package com.github.kairaedsch.intellijpyinvoke.run
+package com.github.kairaedsch.intellijpyinvoke.frontend.tool
 
 import com.github.kairaedsch.intellijpyinvoke.PIBundle
-import com.github.kairaedsch.intellijpyinvoke.scanner.PITask
-import com.github.kairaedsch.intellijpyinvoke.tool.findMatchingPsiElement
+import com.github.kairaedsch.intellijpyinvoke.common.PITask
+import com.github.kairaedsch.intellijpyinvoke.backend.findMatchingPsiElement
+import com.github.kairaedsch.intellijpyinvoke.frontend.run.*
 import com.intellij.icons.ExpUiIcons.General.Edit
 import com.intellij.icons.ExpUiIcons.Run.Debug
 import com.intellij.icons.ExpUiIcons.Run.Run
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.Separator

@@ -1,4 +1,4 @@
-package com.github.kairaedsch.intellijpyinvoke.ui
+package com.github.kairaedsch.intellijpyinvoke.frontend.ui
 
 import com.intellij.openapi.util.IconLoader
 
