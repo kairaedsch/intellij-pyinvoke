@@ -85,7 +85,6 @@ class PIDirectRunner(val onInfo: (piInfo: PIInfo) -> Unit) {
             fileLogger().info("Ran! Output: \n$output")
             return stdout
         } catch (e: ExecutionException) {
-            fileLogger().info("Error running '$command ${args.joinToString(" ")}' in $path", e)
             onInfo(PIInfo.error(PIBundle.message("info_run_error", e.message ?: "")))
             return null
         }
