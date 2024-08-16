@@ -1,4 +1,4 @@
-package com.github.kairaedsch.intellijpyinvoke.tool
+package com.github.kairaedsch.intellijpyinvoke.backend
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile

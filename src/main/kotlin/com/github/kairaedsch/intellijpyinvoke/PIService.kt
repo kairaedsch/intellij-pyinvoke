@@ -1,19 +1,22 @@
 package com.github.kairaedsch.intellijpyinvoke
 
-import com.github.kairaedsch.intellijpyinvoke.run.PIRunMode
-import com.github.kairaedsch.intellijpyinvoke.run.PIRunMode.MODE_TERMINAL_RUN
-import com.github.kairaedsch.intellijpyinvoke.scanner.PIProject
-import com.github.kairaedsch.intellijpyinvoke.scanner.PITask
-import com.intellij.platform.ide.progress.withBackgroundProgress
+import com.github.kairaedsch.intellijpyinvoke.backend.scan
+import com.github.kairaedsch.intellijpyinvoke.common.PIProject
+import com.github.kairaedsch.intellijpyinvoke.common.PIRunMode
+import com.github.kairaedsch.intellijpyinvoke.common.PIRunMode.MODE_TERMINAL_RUN
+import com.github.kairaedsch.intellijpyinvoke.common.PITask
 import com.intellij.notification.Notification
-import com.intellij.notification.NotificationType.ERROR
+import com.intellij.notification.NotificationType.*
 import com.intellij.notification.Notifications
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.project.Project
+import com.intellij.platform.ide.progress.withBackgroundProgress
 import com.jetbrains.python.psi.PyFunction
+import javafx.beans.property.ReadOnlyBooleanProperty
 import javafx.beans.property.ReadOnlyObjectProperty
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -26,14 +29,20 @@ class PIService(private val project: Project): Disposable, CoroutineScope {
 
     private val _pyInvokeProject: SimpleObjectProperty<PIProject?> = SimpleObjectProperty(null)
     val pyInvokeProject: ReadOnlyObjectProperty<PIProject?> get() = _pyInvokeProject
+    private val _refreshing: SimpleBooleanProperty = SimpleBooleanProperty(false)
+    val refreshing: ReadOnlyBooleanProperty get() = _refreshing
 
     fun refresh(runMode: PIRunMode? = null) {
+        _refreshing.set(true)
         val realRunMode = runMode ?: this.runMode
         launch {
             withBackgroundProgress(project, PIBundle.message("background_scan", project.name), true) {
-                val piProject = PIProject(project, realRunMode)
-                ApplicationManager.getApplication().invokeLater {
-                    _pyInvokeProject.set(piProject)
+                try {
+                    val piProject = scan(project, realRunMode)
+                    ApplicationManager.getApplication().invokeLater { _pyInvokeProject.set(piProject) }
+                }
+                finally {
+                    ApplicationManager.getApplication().invokeLater { _refreshing.set(false) }
                 }
             }
         }
@@ -47,13 +56,21 @@ class PIService(private val project: Project): Disposable, CoroutineScope {
             val task = folder.findCompatiblePiTask(element) ?: continue
             return task
         }
-        Notifications.Bus.notify(
+        if (pyInvokeProject.get() == null) Notifications.Bus.notify(
+            Notification(
+                "com.github.kairaedsch.intellijpyinvoke.notifications",
+                PIBundle.message("notification.tasks_loading.title"),
+                PIBundle.message("notification.tasks_loading.description"),
+                INFORMATION,
+            ))
+        else Notifications.Bus.notify(
             Notification(
                 "com.github.kairaedsch.intellijpyinvoke.notifications",
                 PIBundle.message("notification.task_not_found.title"),
                 PIBundle.message("notification.task_not_found.description"),
                 ERROR,
             ))
+        if (!refreshing.get()) refresh()
         return null
     }
 
