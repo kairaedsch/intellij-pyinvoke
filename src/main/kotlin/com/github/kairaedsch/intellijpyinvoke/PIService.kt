@@ -4,21 +4,20 @@ import com.github.kairaedsch.intellijpyinvoke.backend.scan
 import com.github.kairaedsch.intellijpyinvoke.common.PIProject
 import com.github.kairaedsch.intellijpyinvoke.common.PIRunMode
 import com.github.kairaedsch.intellijpyinvoke.common.PIRunMode.MODE_TERMINAL_RUN
-import com.github.kairaedsch.intellijpyinvoke.common.PITask
-import com.intellij.notification.Notification
-import com.intellij.notification.NotificationType.*
-import com.intellij.notification.Notifications
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.Service
+import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 import com.intellij.platform.ide.progress.withBackgroundProgress
-import com.jetbrains.python.psi.PyFunction
 import javafx.beans.property.ReadOnlyBooleanProperty
 import javafx.beans.property.ReadOnlyObjectProperty
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 @Service(Service.Level.PROJECT)
@@ -34,6 +33,7 @@ class PIService(private val project: Project): Disposable, CoroutineScope {
 
     fun refresh(runMode: PIRunMode? = null) {
         _refreshing.set(true)
+        FileDocumentManager.getInstance().saveAllDocuments()
         val realRunMode = runMode ?: this.runMode
         launch {
             withBackgroundProgress(project, PIBundle.message("background_scan", project.name), true) {
@@ -50,29 +50,6 @@ class PIService(private val project: Project): Disposable, CoroutineScope {
 
     val runMode: PIRunMode
         get() = pyInvokeProject.get()?.runMode ?: MODE_TERMINAL_RUN
-
-    fun getTask(element: PyFunction): PITask? {
-        for (folder in pyInvokeProject.get()?.pyInvokeFolders ?: emptyList()) {
-            val task = folder.findCompatiblePiTask(element) ?: continue
-            return task
-        }
-        if (pyInvokeProject.get() == null) Notifications.Bus.notify(
-            Notification(
-                "com.github.kairaedsch.intellijpyinvoke.notifications",
-                PIBundle.message("notification.tasks_loading.title"),
-                PIBundle.message("notification.tasks_loading.description"),
-                INFORMATION,
-            ))
-        else Notifications.Bus.notify(
-            Notification(
-                "com.github.kairaedsch.intellijpyinvoke.notifications",
-                PIBundle.message("notification.task_not_found.title"),
-                PIBundle.message("notification.task_not_found.description"),
-                ERROR,
-            ))
-        if (!refreshing.get()) refresh()
-        return null
-    }
 
     override fun dispose() = job.cancel()
 }
