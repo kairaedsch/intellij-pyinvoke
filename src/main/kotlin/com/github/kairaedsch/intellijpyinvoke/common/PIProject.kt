@@ -7,7 +7,15 @@ import com.jetbrains.python.sdk.basePath
 class PIProject(
     val runMode: PIRunMode,
     val pyInvokeFolders: List<PIFolder>,
-)
+) {
+    fun getTask(function: PyFunction): PITask? {
+        for (folder in pyInvokeFolders) {
+            val task = folder.findCompatiblePiTask(function) ?: continue
+            return task
+        }
+        return null
+    }
+}
 
 class PIFolder(
     val module: Module,

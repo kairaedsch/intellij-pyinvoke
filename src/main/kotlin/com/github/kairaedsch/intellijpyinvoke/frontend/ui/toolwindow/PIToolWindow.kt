@@ -2,14 +2,12 @@ package com.github.kairaedsch.intellijpyinvoke.frontend.ui.toolwindow
 
 import com.github.kairaedsch.intellijpyinvoke.PIBundle
 import com.github.kairaedsch.intellijpyinvoke.PIService
+import com.github.kairaedsch.intellijpyinvoke.common.PIInfo
+import com.github.kairaedsch.intellijpyinvoke.common.PIInfoState.INFO
+import com.github.kairaedsch.intellijpyinvoke.common.PIRunMode.*
+import com.github.kairaedsch.intellijpyinvoke.common.PITask
 import com.github.kairaedsch.intellijpyinvoke.frontend.tool.PIAction.*
 import com.github.kairaedsch.intellijpyinvoke.frontend.tool.PIAction.Factory.createActionsList
-import com.github.kairaedsch.intellijpyinvoke.common.PIRunMode.MODE_TERMINAL_RUN
-import com.github.kairaedsch.intellijpyinvoke.common.PIRunMode.MODE_SDK_RUN
-import com.github.kairaedsch.intellijpyinvoke.common.PIRunMode.MODE_SDK_DEBUG
-import com.github.kairaedsch.intellijpyinvoke.common.PITask
-import com.github.kairaedsch.intellijpyinvoke.common.PIInfo
-import com.github.kairaedsch.intellijpyinvoke.common.PIInfoState.*
 import com.github.kairaedsch.intellijpyinvoke.frontend.ui.tool.PIAutoUpdatePanel
 import com.intellij.icons.ExpUiIcons
 import com.intellij.icons.ExpUiIcons.General.CollapseAll
@@ -111,7 +109,8 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
                 if (selectedNodes.size == 0) return emptyArray()
                 val selectedNode = selectedNodes[0] ?: return emptyArray()
                 if (selectedNode.userObject !is PITask) return emptyArray()
-                return createActionsList({selectedNode.userObject as PITask })
+                val piTask = selectedNode.userObject as PITask
+                return createActionsList(piTask.name, true) { callback -> callback(piTask) }
             }
         }
         val popupMenu = ActionManager.getInstance().createActionPopupMenu(TOOLWINDOW_CONTENT, popupMenuActionGroup)
