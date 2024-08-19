@@ -18,17 +18,17 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.modules
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.ui.AnimatedIcon
+import java.awt.Component
 import com.intellij.ui.components.JBPanel
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.treeStructure.Tree
+import com.intellij.util.ui.JBUI
 import javafx.beans.property.SimpleBooleanProperty
 import java.awt.BorderLayout
 import java.awt.FlowLayout
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
-import javax.swing.JButton
-import javax.swing.JLabel
-import javax.swing.SwingConstants
+import javax.swing.*
 import javax.swing.tree.DefaultMutableTreeNode
 
 class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
@@ -39,6 +39,7 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
     init {
         listen(service.pyInvokeProject)
         listen(service.refreshing)
+        listen(service.refreshingProgress)
         listen(infoMode)
     }
 
@@ -50,8 +51,18 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
     }
 
     private fun createLoadingPanel() = JBPanel<JBPanel<*>>().apply {
-        layout = FlowLayout(FlowLayout.CENTER)
-        add(JLabel(PIBundle.message("loading"), AnimatedIcon.Default(), SwingConstants.CENTER))
+        layout = BoxLayout(this, BoxLayout.Y_AXIS)
+        val bar = JProgressBar()
+        bar.minimum = -5
+        bar.maximum = 100
+        bar.value = ((service.refreshingProgress.get() ?: 0.0) * 100).toInt()
+        add(bar, SwingConstants.CENTER)
+
+        add(Box.createVerticalStrut(JBUI.scale(10)))
+
+        val label = JLabel(PIBundle.message("loading", bar.value), AnimatedIcon.Default(), SwingConstants.CENTER)
+        label.alignmentX = Component.CENTER_ALIGNMENT
+        add(label)
         addTitle(null)
     }
 
