@@ -10,10 +10,7 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 import com.intellij.platform.ide.progress.withBackgroundProgress
-import javafx.beans.property.ReadOnlyBooleanProperty
-import javafx.beans.property.ReadOnlyObjectProperty
-import javafx.beans.property.SimpleBooleanProperty
-import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.property.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,21 +25,26 @@ class PIService(private val project: Project): Disposable, CoroutineScope {
 
     private val _pyInvokeProject: SimpleObjectProperty<PIProject?> = SimpleObjectProperty(null)
     val pyInvokeProject: ReadOnlyObjectProperty<PIProject?> get() = _pyInvokeProject
-    private val _refreshing: SimpleBooleanProperty = SimpleBooleanProperty(false)
+    private val _refreshingProgress: SimpleObjectProperty<Double> = SimpleObjectProperty(null)
+    val refreshingProgress: ReadOnlyObjectProperty<Double?> get() = _refreshingProgress
+    private val _refreshing: SimpleBooleanProperty = SimpleBooleanProperty().apply {
+        bind(_refreshingProgress.isNotNull)
+    }
     val refreshing: ReadOnlyBooleanProperty get() = _refreshing
 
     fun refresh(runMode: PIRunMode? = null) {
-        _refreshing.set(true)
+        _refreshingProgress.set(0.0)
         FileDocumentManager.getInstance().saveAllDocuments()
         val realRunMode = runMode ?: this.runMode
         launch {
             withBackgroundProgress(project, PIBundle.message("background_scan", project.name), true) {
+                val app = ApplicationManager.getApplication()
                 try {
-                    val piProject = scan(project, realRunMode)
-                    ApplicationManager.getApplication().invokeLater { _pyInvokeProject.set(piProject) }
+                    val piProject = scan(project, realRunMode) { p -> app.invokeLater { _refreshingProgress.set(p) } }
+                    app.invokeLater { _pyInvokeProject.set(piProject) }
                 }
                 finally {
-                    ApplicationManager.getApplication().invokeLater { _refreshing.set(false) }
+                    app.invokeLater { _refreshingProgress.set(null) }
                 }
             }
         }

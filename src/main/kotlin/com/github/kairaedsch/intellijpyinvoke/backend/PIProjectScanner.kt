@@ -10,10 +10,17 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.search.FilenameIndex
 import kotlin.text.RegexOption.MULTILINE
 
-fun scan(project: Project, runMode: PIRunMode): PIProject {
-    val folders = ModuleManager.getInstance(project).modules.flatMap { module ->
-        determineFolderPaths(module)
-            .map { folder -> scanFolder(module, runMode, folder.path) }
+fun scan(project: Project, runMode: PIRunMode, onProgress: (Double) -> Unit): PIProject {
+    val modules = ModuleManager.getInstance(project).modules
+    val folders = modules.flatMapIndexed { moduleId, module ->
+        val folderPaths = determineFolderPaths(module)
+        folderPaths.mapIndexed { folderId, folder ->
+            val piFolder = scanFolder(module, runMode, folder.path)
+            val moduleCount = (modules.size).toDouble()
+            val folderCount = (folderPaths.size).toDouble()
+            onProgress(moduleId / moduleCount + ((1.0 / moduleCount) * (folderId + 1.0) / folderCount))
+            piFolder
+        }
     }
     return PIProject(runMode, folders)
 }
