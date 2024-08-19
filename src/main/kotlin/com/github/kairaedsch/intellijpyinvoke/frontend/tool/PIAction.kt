@@ -21,7 +21,13 @@ typealias TaskFinder = (callback: (task: PITask) -> Unit) -> Unit
 
 enum class PIAction(private val title: (name: String) -> String, private val icon: Icon? = null) {
     TERMINAL_RUN({ name -> PIBundle.message("run_terminal_task", name) }, TerminalIcons.Command) {
-        override fun run(piTask: PITask) = run(createTerminalRunConfiguration(piTask))
+        override fun run(piTask: PITask) {
+            try {
+                run(createTerminalRunConfiguration(piTask))
+            } catch (e: LinkageError) {
+                runInTerminalTab(piTask)
+            }
+        }
     },
     TERMINAL_MODIFY({ PIBundle.message("modify_run_conf") }) {
         override fun run(piTask: PITask) = modify(createTerminalRunConfiguration(piTask))

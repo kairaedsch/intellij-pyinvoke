@@ -8,17 +8,17 @@ import com.intellij.execution.RunnerAndConfigurationSettings
 import com.intellij.execution.executors.DefaultDebugExecutor
 import com.intellij.execution.executors.DefaultRunExecutor
 import com.intellij.execution.impl.RunDialog
-import com.intellij.ide.plugins.PluginManager
-import com.intellij.openapi.extensions.PluginId
 import com.intellij.sh.run.ShConfigurationType
 import com.intellij.sh.run.ShRunConfiguration
 import com.jetbrains.python.run.PythonConfigurationType
 import com.jetbrains.python.run.PythonRunConfiguration
+import org.jetbrains.plugins.terminal.TerminalToolWindowManager
+import org.jetbrains.plugins.terminal.TerminalUtil
 
 
 fun createSdkRunConfiguration(task: PITask): RunnerAndConfigurationSettings {
     val runManager = RunManager.getInstance(task.module.project)
-    val configuration: RunnerAndConfigurationSettings = runManager.createConfiguration("Pyinvoke ${task.fullName}", PythonConfigurationType.getInstance().factory)
+    val configuration = runManager.createConfiguration("Pyinvoke ${task.fullName}", PythonConfigurationType::class.java)
     val pythonRunConfiguration = configuration.configuration as PythonRunConfiguration
 
     pythonRunConfiguration.name = "invoke ${task.fullName}"
@@ -33,7 +33,6 @@ fun createSdkRunConfiguration(task: PITask): RunnerAndConfigurationSettings {
 }
 
 fun createTerminalRunConfiguration(task: PITask): RunnerAndConfigurationSettings {
-    val plugin = PluginManager.getInstance().findEnabledPlugin(PluginId.getId("com.jetbrains.sh"))
     val runManager = RunManager.getInstance(task.module.project)
     val factory = ShConfigurationType.getInstance()
     val configuration: RunnerAndConfigurationSettings = runManager.createConfiguration("Pyinvoke ${task.fullName}",
@@ -53,6 +52,19 @@ fun run(configuration: RunnerAndConfigurationSettings) {
     add(configuration)
     val executor = DefaultRunExecutor.getRunExecutorInstance()
     ProgramRunnerUtil.executeConfiguration(configuration, executor)
+}
+
+fun runInTerminalTab(task: PITask) {
+    val tool = TerminalToolWindowManager.getInstance(task.module.project)
+    val widget = tool.terminalWidgets
+        .filter { it.terminalTitle.defaultTitle?.startsWith("PyInvoke") ?: false }
+        .filter {
+            val ttyConnector = it.ttyConnector
+            ttyConnector == null || !TerminalUtil.hasRunningCommands(ttyConnector)
+        }
+        .firstOrNull() ?: tool.createShellWidget(task.path, "PyInvoke", true, true)
+    widget.requestFocus()
+    widget.sendCommandToExecute("invoke ${task.fullName}")
 }
 
 fun debug(configuration: RunnerAndConfigurationSettings) {
