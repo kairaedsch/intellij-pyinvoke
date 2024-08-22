@@ -42,7 +42,7 @@ class PITreeCellRenderer(private val service: PIService) : ColoredTreeCellRender
         append(name, if (isBoldText(obj)) REGULAR_BOLD_ATTRIBUTES else REGULAR_ATTRIBUTES)
         if (obj is Project || obj is Module || obj is PIFolder) append("  " + message("x_tasks", taskCount), GRAYED_ATTRIBUTES)
         icon = when {
-            level <= 1 -> Icons.Logo
+            level <= 1 -> Icons.logo
             !leaf -> ExpUiIcons.RunConfigurations.Compound
             obj is PIInfo -> infoStateIcon(obj.state)
             else -> runModeIcon(service.runMode)
