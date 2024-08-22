@@ -28,7 +28,7 @@ class PIRunLineMarkerContributor: RunLineMarkerContributor() {
         if (decorators.none { decorator -> decorator.name == "task" }) return null
         return Info(Execute, createActionsList(pyFunction.name ?: "",false) { callback ->
             taskFinder(pyFunction, callback)
-        }, { "PyInvoke" })
+        }) { "PyInvoke" }
     }
 
     private fun taskFinder(element: PyFunction, callback: (task: PITask) -> Unit) {

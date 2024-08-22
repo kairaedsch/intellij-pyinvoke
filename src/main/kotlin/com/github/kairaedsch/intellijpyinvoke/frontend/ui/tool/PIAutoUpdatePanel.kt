@@ -4,7 +4,7 @@ import com.intellij.ui.components.JBPanel
 import javafx.beans.value.ObservableValue
 import java.awt.BorderLayout
 
-abstract class PIAutoUpdatePanel() {
+abstract class PIAutoUpdatePanel {
     private val listenValues = mutableSetOf<ObservableValue<out Any?>>()
     val panel = JBPanel<JBPanel<*>>().apply {
         layout = BorderLayout()
