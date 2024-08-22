@@ -63,8 +63,12 @@ fun runInTerminalTab(task: PITask) {
             ttyConnector == null || !TerminalUtil.hasRunningCommands(ttyConnector)
         }
         .firstOrNull() ?: tool.createShellWidget(task.path, "PyInvoke", true, true)
-    widget.requestFocus()
     widget.sendCommandToExecute("invoke ${task.fullName}")
+
+    tool.toolWindow?.show {
+        val content = tool.getContainer(widget)?.content ?: return@show
+        tool.toolWindow.contentManager.setSelectedContent(content, true, true)
+    }
 }
 
 fun debug(configuration: RunnerAndConfigurationSettings) {
