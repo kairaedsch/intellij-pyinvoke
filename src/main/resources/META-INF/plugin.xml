@@ -16,5 +16,9 @@
                               implementationClass="com.github.kairaedsch.intellijpyinvoke.frontend.PIRunLineMarkerContributor"/>
     <notificationGroup id="com.github.kairaedsch.intellijpyinvoke.notifications" displayType="TOOL_WINDOW"
                        key="notifications" toolWindowId="PyInvokeToolWindow"/>
+    <dependencySupport kind="python" coordinate="invoke"/>
+    <dependencySupport kind="python" coordinate="pypi:invoke"/>
+    <dependencySupport kind="executeable" coordinate="invoke"/>
+    <dependencySupport kind="executeable" coordinate="inv"/>
   </extensions>
 </idea-plugin>
