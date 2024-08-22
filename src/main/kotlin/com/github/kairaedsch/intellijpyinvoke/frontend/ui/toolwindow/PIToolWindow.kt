@@ -117,7 +117,7 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
         val popupMenuActionGroup = object : ActionGroup() {
             override fun getChildren(e: AnActionEvent?): Array<AnAction> {
                 val selectedNodes = tree.getSelectedNodes(DefaultMutableTreeNode::class.java, null)
-                if (selectedNodes.size == 0) return emptyArray()
+                if (selectedNodes.isEmpty()) return emptyArray()
                 val selectedNode = selectedNodes[0] ?: return emptyArray()
                 if (selectedNode.userObject !is PITask) return emptyArray()
                 val piTask = selectedNode.userObject as PITask
