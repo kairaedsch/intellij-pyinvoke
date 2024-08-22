@@ -4,6 +4,17 @@
 
 ## [Unreleased]
 
+### General
+
+- Refactorings
+
+### Added
+
+- Debug infos
+- Terminal tab run logic
+- Add percentage to progress bar
+- Add dependency support to plugin.xml
+
 ## [0.0.4-alpha] - 2024-07-09
 
 ### Added
