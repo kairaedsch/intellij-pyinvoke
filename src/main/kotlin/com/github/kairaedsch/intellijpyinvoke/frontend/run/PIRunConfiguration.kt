@@ -40,6 +40,7 @@ fun createTerminalRunConfiguration(task: PITask): RunnerAndConfigurationSettings
     )
     val shRunConfiguration = configuration.configuration as ShRunConfiguration
 
+    shRunConfiguration.isExecuteScriptFile = false
     shRunConfiguration.name = "invoke ${task.fullName}"
     shRunConfiguration.scriptText = "invoke ${task.fullName}"
     shRunConfiguration.isExecuteInTerminal = false

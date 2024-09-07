@@ -9,9 +9,9 @@ import com.github.kairaedsch.intellijpyinvoke.common.PITask
 import com.github.kairaedsch.intellijpyinvoke.frontend.tool.PIAction.*
 import com.github.kairaedsch.intellijpyinvoke.frontend.tool.PIAction.Factory.createActionsList
 import com.github.kairaedsch.intellijpyinvoke.frontend.ui.tool.PIAutoUpdatePanel
-import com.intellij.icons.ExpUiIcons
-import com.intellij.icons.ExpUiIcons.General.CollapseAll
-import com.intellij.icons.ExpUiIcons.General.ExpandAll
+import com.intellij.icons.AllIcons.Actions.Refresh
+import com.intellij.icons.AllIcons.Actions.Expandall
+import com.intellij.icons.AllIcons.Actions.Collapseall
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.actionSystem.ActionPlaces.TOOLWINDOW_CONTENT
 import com.intellij.openapi.components.service
@@ -152,7 +152,7 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
         toolWindow.stripeTitle = PIBundle.message("toolWindow.title")
         toolWindow.setTitleActions(
             listOf(
-                object : AnAction({ PIBundle.message("refresh") }, ExpUiIcons.General.Refresh) {
+                object : AnAction({ PIBundle.message("refresh") }, Refresh) {
                     override fun actionPerformed(e: AnActionEvent) = service.refresh()
                 },
                 object : ActionGroup(PIBundle.message("current_mode", service.runMode.title), true) {
@@ -169,14 +169,14 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
                     }
                 },
                 Separator.create(),
-                object : AnAction({ PIBundle.message("expand_all") }, ExpandAll) {
+                object : AnAction({ PIBundle.message("expand_all") }, Expandall) {
                     override fun actionPerformed(e: AnActionEvent) {
                         actionUpdateThread
                         var i = 0
                         while (i++ <= (tree?.rowCount ?: 0)) tree?.expandRow(i - 1)
                     }
                 },
-                object : AnAction({ PIBundle.message("collapse_all") }, CollapseAll) {
+                object : AnAction({ PIBundle.message("collapse_all") }, Collapseall) {
                     override fun actionPerformed(e: AnActionEvent) {
                         var i = 0
                         while (i++ <= (tree?.rowCount ?: 0)) tree?.collapseRow(i)

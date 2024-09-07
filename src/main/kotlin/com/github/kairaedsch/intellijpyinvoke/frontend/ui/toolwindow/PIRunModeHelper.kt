@@ -2,8 +2,8 @@ package com.github.kairaedsch.intellijpyinvoke.frontend.ui.toolwindow
 
 import com.github.kairaedsch.intellijpyinvoke.common.PIRunMode
 import com.github.kairaedsch.intellijpyinvoke.common.PIRunMode.*
-import com.intellij.icons.ExpUiIcons.Run.Debug
-import com.intellij.icons.ExpUiIcons.Run.Run
+import com.intellij.icons.AllIcons.Actions.StartDebugger
+import com.intellij.icons.AllIcons.Actions.Execute
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -27,7 +27,7 @@ fun runModeAsAction(mode: PIRunMode, isSelected: () -> Boolean, select: (Boolean
 fun runModeIcon(mode: PIRunMode): Icon {
     return when (mode) {
         MODE_TERMINAL_RUN -> TerminalIcons.Command
-        MODE_SDK_RUN -> Run
-        MODE_SDK_DEBUG -> Debug
+        MODE_SDK_RUN -> Execute
+        MODE_SDK_DEBUG -> StartDebugger
     }
 }
