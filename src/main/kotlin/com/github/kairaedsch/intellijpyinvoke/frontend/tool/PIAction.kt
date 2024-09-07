@@ -4,9 +4,9 @@ import com.github.kairaedsch.intellijpyinvoke.PIBundle
 import com.github.kairaedsch.intellijpyinvoke.common.PITask
 import com.github.kairaedsch.intellijpyinvoke.backend.findMatchingPsiElement
 import com.github.kairaedsch.intellijpyinvoke.frontend.run.*
-import com.intellij.icons.ExpUiIcons.General.Edit
-import com.intellij.icons.ExpUiIcons.Run.Debug
-import com.intellij.icons.ExpUiIcons.Run.Run
+import com.intellij.icons.AllIcons.Actions.StartDebugger
+import com.intellij.icons.AllIcons.Actions.Execute
+import com.intellij.icons.AllIcons.Actions.Edit
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.Separator
@@ -32,10 +32,10 @@ enum class PIAction(private val title: (name: String) -> String, private val ico
     TERMINAL_MODIFY({ PIBundle.message("modify_run_conf") }) {
         override fun run(piTask: PITask) = modify(createTerminalRunConfiguration(piTask))
     },
-    SDK_RUN({ name -> PIBundle.message("run_task", name) }, Run) {
+    SDK_RUN({ name -> PIBundle.message("run_task", name) }, Execute) {
         override fun run(piTask: PITask) = run(createSdkRunConfiguration(piTask))
     },
-    SDK_DEBUG({ name -> PIBundle.message("debug_task", name) }, Debug) {
+    SDK_DEBUG({ name -> PIBundle.message("debug_task", name) }, StartDebugger) {
         override fun run(piTask: PITask) = debug(createSdkRunConfiguration(piTask))
     },
     SDK_MODIFY({ PIBundle.message("modify_run_conf") }) {

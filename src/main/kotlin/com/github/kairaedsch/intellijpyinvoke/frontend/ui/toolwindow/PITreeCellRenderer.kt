@@ -6,7 +6,7 @@ import com.github.kairaedsch.intellijpyinvoke.common.PIFolder
 import com.github.kairaedsch.intellijpyinvoke.common.PITask
 import com.github.kairaedsch.intellijpyinvoke.common.PIInfo
 import com.github.kairaedsch.intellijpyinvoke.frontend.ui.Icons
-import com.intellij.icons.ExpUiIcons
+import com.intellij.icons.AllIcons.RunConfigurations.Compound
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.ui.ColoredTreeCellRenderer
@@ -43,7 +43,7 @@ class PITreeCellRenderer(private val service: PIService) : ColoredTreeCellRender
         if (obj is Project || obj is Module || obj is PIFolder) append("  " + message("x_tasks", taskCount), GRAYED_ATTRIBUTES)
         icon = when {
             level <= 1 -> Icons.logo
-            !leaf -> ExpUiIcons.RunConfigurations.Compound
+            !leaf -> Compound
             obj is PIInfo -> infoStateIcon(obj.state)
             else -> runModeIcon(service.runMode)
         }
@@ -54,6 +54,7 @@ class PITreeCellRenderer(private val service: PIService) : ColoredTreeCellRender
 
     private fun tasksCount(node: DefaultMutableTreeNode): Int {
         var count = 0
+        @Suppress("UNCHECKED_CAST")
         for (child in node.children() as Enumeration<DefaultMutableTreeNode>) {
             count += if (child.userObject is PITask) 1 else tasksCount(child)
         }

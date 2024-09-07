@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### General
+
+- Upgrade to intelliJPlatform 2
+
 ## [0.0.5-alpha] - 2024-08-25
 
 ### General
