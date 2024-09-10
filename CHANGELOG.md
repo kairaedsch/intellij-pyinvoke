@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.2.0] - 2024-09-10
+
 ### General
 
 - Upgrade to intelliJPlatform 2
@@ -39,7 +41,8 @@
 
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 
-[Unreleased]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.0.5-alpha...HEAD
+[Unreleased]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.0.5-alpha...v0.2.0
 [0.0.5-alpha]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.0.4-alpha...v0.0.5-alpha
 [0.0.4-alpha]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.0.3-alpha...v0.0.4-alpha
 [0.0.3-alpha]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.0.2-alpha...v0.0.3-alpha
