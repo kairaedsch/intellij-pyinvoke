@@ -149,6 +149,9 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
             ?.flatMap { it.infos }
             ?.map { it.state }
             ?.maxBy { it.severity } ?: INFO
+        val infoSeverityCount = service.pyInvokeProject.get()?.pyInvokeFolders
+            ?.flatMap { it.infos }
+            ?.count { it.state == infoSeverity } ?: 0
         toolWindow.stripeTitle = PIBundle.message("toolWindow.title")
         toolWindow.setTitleActions(
             listOf(
@@ -183,7 +186,7 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
                     }
                 },
                 Separator.create(),
-                object : ToggleAction ({ PIBundle.message(if (infoMode.value) "hide_info" else "show_info") }, infoStateIcon(infoSeverity)) {
+                object : ToggleAction ({ PIBundle.message("${if (infoMode.value) "hide" else "show"}_${infoSeverity.keyName}", infoSeverityCount) }, infoStateIcon(infoSeverity)) {
                     override fun isSelected(e: AnActionEvent): Boolean {
                         return infoMode.get()
                     }

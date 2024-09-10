@@ -8,8 +8,8 @@ class PIInfo(val state: PIInfoState, val message: String) {
     }
 }
 
-enum class PIInfoState(val severity: Int) {
-    INFO(0),
-    WARN(1),
-    ERROR(2);
+enum class PIInfoState(val severity: Int, val keyName: String) {
+    INFO(0, "info"),
+    WARN(1, "warn"),
+    ERROR(2, "error");
 }
