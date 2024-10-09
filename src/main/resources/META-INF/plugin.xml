@@ -5,19 +5,26 @@
   <vendor>kairaedsch</vendor>
 
   <depends>com.intellij.modules.platform</depends>
-  <depends>com.intellij.modules.python</depends>
   <depends>com.jetbrains.sh</depends>
   <depends>org.jetbrains.plugins.terminal</depends>
+  <depends optional="true" config-file="com.github.kairaedsch.intellijpyinvoke-python.xml">com.intellij.modules.python</depends>
 
   <resource-bundle>messages.MyBundle</resource-bundle>
 
   <extensions defaultExtensionNs="com.intellij">
-    <toolWindow factoryClass="com.github.kairaedsch.intellijpyinvoke.frontend.ui.toolwindow.PIToolWindowFactory"
-                id="PyInvokeToolWindow" order="first" anchor="right" icon="com.github.kairaedsch.intellijpyinvoke.frontend.ui.Icons.logo"/>
-    <runLineMarkerContributor language="Python"
-                              implementationClass="com.github.kairaedsch.intellijpyinvoke.frontend.PIRunLineMarkerContributor"/>
-    <notificationGroup id="com.github.kairaedsch.intellijpyinvoke.notifications" displayType="TOOL_WINDOW"
-                       key="notifications" toolWindowId="PyInvokeToolWindow"/>
+    <toolWindow
+        factoryClass="com.github.kairaedsch.intellijpyinvoke.frontend.ui.toolwindow.PIToolWindowFactory"
+        id="PyInvokeToolWindow"
+        order="first"
+        anchor="right"
+        icon="com.github.kairaedsch.intellijpyinvoke.frontend.ui.Icons.logo"
+    />
+    <notificationGroup
+        id="com.github.kairaedsch.intellijpyinvoke.notifications"
+        displayType="TOOL_WINDOW"
+        key="notifications"
+        toolWindowId="PyInvokeToolWindow"
+    />
     <dependencySupport kind="python" coordinate="invoke"/>
     <dependencySupport kind="python" coordinate="pypi:invoke"/>
     <dependencySupport kind="executeable" coordinate="invoke"/>
