@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### General
+
+- Add support for more IDEs
+
 ## [0.2.0] - 2024-09-10
 
 ### General
