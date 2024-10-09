@@ -50,7 +50,7 @@ dependencies {
 }
 
 javafx {
-    version = "22.0.1"
+    version = "23"
     modules("javafx.base")
 }
 
