@@ -5,7 +5,7 @@
   <vendor>kairaedsch</vendor>
 
   <depends>com.intellij.modules.platform</depends>
-  <depends>PythonCore</depends>
+  <depends>com.intellij.modules.python</depends>
   <depends>com.jetbrains.sh</depends>
   <depends>org.jetbrains.plugins.terminal</depends>
 
