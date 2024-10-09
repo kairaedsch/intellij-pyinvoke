@@ -1,14 +1,20 @@
 <p align="center"><img height="200px" src="src/main/resources/META-INF/pluginIcon.svg"/></p>
 
-![Build](https://github.com/kairaedsch/intellij-pyinvoke/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/com.github.kairaedsch.intellijpyinvoke.svg)](https://plugins.jetbrains.com/plugin/com.github.kairaedsch.intellijpyinvoke)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.kairaedsch.intellijpyinvoke.svg)](https://plugins.jetbrains.com/plugin/com.github.kairaedsch.intellijpyinvoke)
+[![Build](https://github.com/kairaedsch/intellij-pyinvoke/workflows/Build/badge.svg)](https://github.com/kairaedsch/intellij-pyinvoke/actions)
+[![Version](https://img.shields.io/jetbrains/plugin/v/com.github.kairaedsch.intellijpyinvoke.svg)](https://plugins.jetbrains.com/plugin/24793-pyinvoke)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.kairaedsch.intellijpyinvoke.svg)](https://plugins.jetbrains.com/plugin/24793-pyinvoke)
 
 ## PyInvoke for IntelliJ IDEs
 <!-- Plugin description -->
 Provides [PyInvoke](https://github.com/pyinvoke/invoke) support to all IntelliJ-based IDEs.
 
 Execute and debug your PyInvoke tasks directly within your IDE.
+
+### Showcase
+<p align="center">
+    <img src="images/screenshot_1.png"/>
+    <img src="images/screenshot_2.png"/>
+</p>
 
 ### Features
 - **▶️ Inline Run Buttons**: Easily run your PyInvoke tasks with convenient inline run buttons placed next to each task function.
