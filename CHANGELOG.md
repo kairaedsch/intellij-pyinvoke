@@ -4,9 +4,10 @@
 
 ## [Unreleased]
 
-### General
+## [0.2.1] - 2024-10-10
 
-- Add support for more IDEs
+- Changelog update - v0.2.0 by @kairaedsch in https://github.com/kairaedsch/intellij-pyinvoke/pull/29
+- Develop by @kairaedsch in https://github.com/kairaedsch/intellij-pyinvoke/pull/34
 
 ## [0.2.0] - 2024-09-10
 
@@ -45,7 +46,8 @@
 
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 
-[Unreleased]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.0.5-alpha...v0.2.0
 [0.0.5-alpha]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.0.4-alpha...v0.0.5-alpha
 [0.0.4-alpha]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.0.3-alpha...v0.0.4-alpha
