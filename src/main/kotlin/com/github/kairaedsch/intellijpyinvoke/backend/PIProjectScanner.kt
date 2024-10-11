@@ -47,7 +47,7 @@ private fun scanFolder(module: Module, runMode: PIRunMode, path: String): PIFold
     val infos = ArrayList<PIInfo>()
     val runner = PIDirectRunner { infos.add(it) }
     val list = runner.runPyInvoke(runMode, module, path, "--list") ?: return PIFolder(module, path, infos, emptyList())
-    val taskPattern = """^\s*(\w+(?:\.\w+)*)\s*${'$'}""".toRegex(MULTILINE)
+    val taskPattern = """^\s*((?:\w|-)+(?:\.(?:\w|-)+)*)\s*${'$'}""".toRegex(MULTILINE)
     val matches = taskPattern.findAll(list)
     val tasks = matches.map { task ->
         val fullName = task.groupValues[1]

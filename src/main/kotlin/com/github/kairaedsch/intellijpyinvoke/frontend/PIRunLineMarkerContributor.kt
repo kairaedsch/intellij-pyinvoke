@@ -26,7 +26,7 @@ class PIRunLineMarkerContributor: RunLineMarkerContributor() {
         val pyFunction = PsiTreeUtil.getParentOfType(element, PyFunction::class.java) ?: return null
         val decorators = pyFunction.decoratorList?.decorators ?: return null
         if (decorators.none { decorator -> decorator.name == "task" }) return null
-        return Info(Execute, createActionsList(pyFunction.name ?: "",false) { callback ->
+        return Info(Execute, createActionsList(pyFunction.name?.replace("_", "-") ?: "",false) { callback ->
             taskFinder(pyFunction, callback)
         }) { "PyInvoke" }
     }

@@ -28,7 +28,7 @@ class PIFolder(
         .removePrefix("/")
 
     fun findCompatiblePiTask(function: PyFunction): PITask? {
-        val functionName = function.name ?: return null
+        val functionName = function.name?.replace("_", "-") ?: return null
         val path = function.containingFile.virtualFile.path
         return tasks.find { task -> task.potentialFilePaths.any { it == path } && task.name == functionName }
     }
