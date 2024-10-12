@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- Add support for task with underscores/dashes
+
 ## [0.2.1] - 2024-10-10
 
 - Changelog update - v0.2.0 by @kairaedsch in https://github.com/kairaedsch/intellij-pyinvoke/pull/29
