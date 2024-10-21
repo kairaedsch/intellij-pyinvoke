@@ -103,7 +103,15 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
                             folderNode.add(DefaultMutableTreeNode(PIInfo.info(PIBundle.message("info_no_tasks_found"))))
                         }
                     }
-                    folder.tasks.forEach { task -> folderNode.add(DefaultMutableTreeNode(task)) }
+                    folder.tasks.forEach { task ->
+                        var parentNode = folderNode
+                        for (collection in task.parents) {
+                            val collectionNode = parentNode.children().toList().find { it is DefaultMutableTreeNode && (it.userObject as? PICollection)?.name == collection } ?: DefaultMutableTreeNode(PICollection(collection))
+                            if (!parentNode.isNodeChild(collectionNode)) parentNode.add(collectionNode as DefaultMutableTreeNode)
+                            parentNode = collectionNode as DefaultMutableTreeNode
+                        }
+                        parentNode.add(DefaultMutableTreeNode(task))
+                    }
                 }
             if (moduleNode.childCount > 0) root.add(moduleNode)
         }

@@ -36,7 +36,8 @@ class PITreeCellRenderer(private val service: PIService) : ColoredTreeCellRender
             is Module -> obj.name
             is PIFolder -> obj.pathFromModule
             is PIInfo -> obj.message
-            is PITask -> obj.fullName
+            is PITask -> obj.name
+            is PICollection -> obj.name
             else -> "Unknown object $obj"
         }
         append(name, if (isBoldText(obj)) REGULAR_BOLD_ATTRIBUTES else REGULAR_ATTRIBUTES)
