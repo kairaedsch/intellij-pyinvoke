@@ -8,7 +8,6 @@ import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.search.FilenameIndex
-import kotlin.text.RegexOption.MULTILINE
 
 fun scan(project: Project, runMode: PIRunMode, onProgress: (Double) -> Unit): PIProject {
     val modules = ModuleManager.getInstance(project).modules
@@ -47,11 +46,14 @@ private fun scanFolder(module: Module, runMode: PIRunMode, path: String): PIFold
     val infos = ArrayList<PIInfo>()
     val runner = PIDirectRunner { infos.add(it) }
     val list = runner.runPyInvoke(runMode, module, path, "--list") ?: return PIFolder(module, path, infos, emptyList())
-    val taskPattern = """^\s*((?:\w|-)+(?:\.(?:\w|-)+)*)\s*${'$'}""".toRegex(MULTILINE)
-    val matches = taskPattern.findAll(list)
-    val tasks = matches.map { task ->
-        val fullName = task.groupValues[1]
-        PITask(module, path, fullName)
+    val taskPattern = """^\s*((?:\w|-)+(?:\.(?:\w|-)+)*)\s*((?:\w|-|\s)*)\s*$""".toRegex()
+    val tasks = list.split("\n").flatMap {
+        val matches = taskPattern.findAll(it)
+        matches.map { task ->
+            val fullName = task.groupValues[1]
+            val description = task.groupValues[2].trim()
+            PITask(module, path, fullName, description)
+        }
     }.toList()
     return PIFolder(module, path, infos, tasks)
 }

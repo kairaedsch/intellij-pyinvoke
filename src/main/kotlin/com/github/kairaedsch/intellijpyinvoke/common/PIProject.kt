@@ -38,6 +38,7 @@ class PITask(
     val module: Module,
     val path: String,
     val fullName: String,
+    val description: String,
     val parameters: List<String> = emptyList(),
 ) {
     val name get() = fullName.split(".").last()

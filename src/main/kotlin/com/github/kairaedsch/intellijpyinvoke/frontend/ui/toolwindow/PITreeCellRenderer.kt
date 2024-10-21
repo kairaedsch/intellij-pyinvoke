@@ -48,7 +48,11 @@ class PITreeCellRenderer(private val service: PIService) : ColoredTreeCellRender
             obj is PIInfo -> infoStateIcon(obj.state)
             else -> runModeIcon(service.runMode)
         }
-        toolTipText = if (obj is PIInfo) obj.message else ""
+        toolTipText = when (obj) {
+            is PIInfo -> obj.message
+            is PITask -> obj.description
+            else -> ""
+        }
     }
 
     private fun isBoldText(obj: Any) = obj is Project || obj is Module
