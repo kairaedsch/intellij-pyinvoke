@@ -84,7 +84,6 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
         val root = DefaultMutableTreeNode(project)
         project.modules.forEach { module ->
             val moduleNode = DefaultMutableTreeNode(module)
-            root.add(moduleNode)
             val folders = service.pyInvokeProject.get()?.pyInvokeFolders
                 ?.filter { it.module == module }
             if (folders.isNullOrEmpty() && infoMode.value) {
@@ -106,6 +105,7 @@ class PIToolWindow(private val toolWindow: ToolWindow): PIAutoUpdatePanel() {
                     }
                     folder.tasks.forEach { task -> folderNode.add(DefaultMutableTreeNode(task)) }
                 }
+            if (moduleNode.childCount > 0) root.add(moduleNode)
         }
         val tree = Tree(root)
         var i = 0
