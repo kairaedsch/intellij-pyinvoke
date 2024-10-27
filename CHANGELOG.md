@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+- Side Panel: Hide module if no task found
+- Side Panel: Show PyInvoke collections as folder
+- Side Panel: Add support for descriptions
+
 ## [0.2.2] - 2024-10-15
 
 - Add support for task with underscores/dashes
