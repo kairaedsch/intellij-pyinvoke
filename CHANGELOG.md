@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.2.3] - 2024-10-27
+
 - Side Panel: Hide module if no task found
 - Side Panel: Show PyInvoke collections as folder
 - Side Panel: Add support for descriptions
@@ -54,7 +56,8 @@
 
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 
-[Unreleased]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.2.3...HEAD
+[0.2.3]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/kairaedsch/intellij-pyinvoke/compare/v0.0.5-alpha...v0.2.0
