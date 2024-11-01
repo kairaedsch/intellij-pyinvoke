@@ -1,7 +1,7 @@
 [versions]
 # libraries
 junit = "4.13.2"
-javafx = "23"
+javafx = "23.0.1"
 
 # plugins
 changelog = "2.2.1"
